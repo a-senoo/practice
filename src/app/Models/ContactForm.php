@@ -37,7 +37,7 @@ class ContactForm extends Model
         $search_split = mb_convert_kana($search, 's');
         $search_split2 = preg_split('/[\s]+/', $search_split);
         foreach($search_split2 as $value){
-            $query->where('title','like', '%' .$value. '%')->orWhere('name','like', '%' .$value. '%');
+            $query->sortable()->where('title','like', '%' .$value. '%')->orWhere('name','like', '%' .$value. '%');
         }
         return $query;
     }
