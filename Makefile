@@ -3,6 +3,8 @@
 setup:
 	@make up
 	@make ps
+init:
+	docker-compose up -d --build
 down:
 	docker-compose down --remove-orphans
 up:
