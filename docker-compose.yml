@@ -3,4 +3,4 @@ services:
   nginx: 
     build:
       context: .
-      dockerfile: docker/local.env/nginx/Dockerfile
+      dockerfile: docker/local.env/ngode/Dockerfile
