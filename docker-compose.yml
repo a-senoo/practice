@@ -1,6 +1,12 @@
-version: "3.9"
 services:
-  nginx: 
-    build:
-      context: .
-      dockerfile: docker/local.env/ngode/Dockerfile
+  #  nginx: 
+  #    build:
+  #      context: .
+  #      dockerfile: docker/local.env/nginx/Dockerfile
+  #      network: 
+  #        - default
+  #      ports: 
+  #         - 8010:80
+
+
+
