@@ -11,7 +11,8 @@ ENV TZ=UTC \
 RUN apk update && \
     apk upgrade --no-cache
 
-
+RUN apk add --no-cache tzdata bash wget gpg curl procps inotify-tools unzip
+RUN apk add --no-cache libuv icu-libs libzip-dev oniguruma-dev
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -35,4 +36,4 @@ RUN npm --version
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 
-WORKDIR /data
+WORKDIR /datau
