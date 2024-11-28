@@ -14,14 +14,17 @@ RUN apk update && \
 RUN apk add --no-cache tzdata bash wget gpg curl procps inotify-tools unzip
 RUN apk add --no-cache libuv icu-libs libzip-dev oniguruma-dev
 
+RUN apk add --no-cache --update-cache nodejs npm \
+    && echo "NodeJS Version:" "$(node -v)" \
+    && echo "NPM Version:" "$(npm -v)"
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 
-RUN apk-get update && \
-  apk-get -y install --no-install-recommends git unzip libzip-dev libicu-dev libonig-dev && \
-  apk-get clean && \
-  rm -rf /var/lib/apt/lists/* && \
-  docker-php-ext-install intl pdo_mysql zip bcmath
+ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-php-extensions && \
+    mkdir /var/run/php-fpm && \
+    install-php-extensions gd gettext mcrypt mysqli opcache
 
   # nodejsインストール nvmだけ最新取得
 ENV NODE_VERSION=20.11.0
