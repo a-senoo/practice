@@ -29,10 +29,12 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
 FROM php-build-stage as php-app-build-stage
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-RUN apk update && apk upgrade --no-cache
 
-RUN mkdir -p $APP_HOME/wordpress
+RUN apt update && apt upgrade --no-cache
+
+ENV mkdir $APP_HOME /work/backend
+RUN mkdir -p $APP_HOME
+
 VOLUME  $APP_HOME
 WORKDIR $APP_HOME
 
-WORKDIR /datau
