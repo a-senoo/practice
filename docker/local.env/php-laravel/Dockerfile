@@ -26,17 +26,13 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     mkdir /var/run/php-fpm && \
     install-php-extensions gd gettext mcrypt mysqli opcache
 
-  # nodejsインストール nvmだけ最新取得
-ENV NODE_VERSION=20.11.0
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
-ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm use ${NODE_VERSION}
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default ${NODE_VERSION}
-ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
-RUN node --version
-RUN npm --version
+FROM php-build-stage as php-app-build-stage
 
-COPY ./php.ini /usr/local/etc/php/php.ini
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN apk update && apk upgrade --no-cache
+
+RUN mkdir -p $APP_HOME/wordpress
+VOLUME  $APP_HOME
+WORKDIR $APP_HOME
 
 WORKDIR /datau
