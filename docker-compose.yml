@@ -3,10 +3,13 @@ services:
   #    build:
   #      context: .
   #      dockerfile: docker/local.env/nginx/Dockerfile
-  #      network: 
+  #      networks: 
   #        - default
   #      ports: 
   #         - 8010:80
-
-
-
+  practice-web-app:
+    build:
+      context: .
+      docker: ./docker/local.env/php-laravel/Dockerfile
+    networks:
+      - default
