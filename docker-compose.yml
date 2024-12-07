@@ -5,6 +5,7 @@ services:
       dockerfile: ./practice-cms/docker/local.env/php-laravel/Dockerfile
     volumes:
       - ./practice-cms/:/work/backend
+      - ./practice-cms/docker/local.env/php-laravel/php.ini:/usr/local/etc/php.ini 
     networks:
       - default
       #  nginx: 
