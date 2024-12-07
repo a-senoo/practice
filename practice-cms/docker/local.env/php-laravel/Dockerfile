@@ -1,6 +1,6 @@
 FROM php:8.3-fpm-alpine AS php-build-stage
 
-SHELL ["bin/sh","-oeux","pipefaile","-c"]
+SHELL ["/bin/sh","-oeux","pipefaile","-c"]
 
 ENV TZ=UTC \
   # locale
@@ -18,9 +18,6 @@ RUN apk add --no-cache --update-cache nodejs npm \
     && echo "NodeJS Version:" "$(node -v)" \
     && echo "NPM Version:" "$(npm -v)"
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     mkdir /var/run/php-fpm && \
@@ -30,9 +27,10 @@ FROM php-build-stage as php-app-build-stage
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-RUN apt update && apt upgrade --no-cache
+RUN apk update && \
+    apk upgrade --no-cache
 
-ENV mkdir $APP_HOME /work/backend
+ENV APP_HOME /work/backend
 RUN mkdir -p $APP_HOME
 
 VOLUME  $APP_HOME

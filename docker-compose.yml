@@ -1,15 +1,17 @@
 services:
-  #  nginx: 
+  practice-web-app:
+    build:
+      context: .
+      dockerfile: ./practice-cms/docker/local.env/php-laravel/Dockerfile
+    volumes:
+      - ./practice-cms/:/work/backend
+    networks:
+      - default
+      #  nginx: 
   #    build:
   #      context: .
-  #      dockerfile: docker/local.env/nginx/Dockerfile
+  #      dockerfile: ./practice-cms/docker/local.env/nginx/Dockerfile
   #      networks: 
   #        - default
   #      ports: 
   #         - 8010:80
-  practice-web-app:
-    build:
-      context: .
-      docker: ./docker/local.env/php-laravel/Dockerfile
-    networks:
-      - default
