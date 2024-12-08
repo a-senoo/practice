@@ -6,7 +6,7 @@ services:
     volumes:
       - ./practice-cms/:/work/backend
       - ./practice-cms/docker/local.env/php-laravel/php.ini:/usr/local/etc/php.ini 
-      - ./practice-cms/docker/local.env/php-laravel/php-fpm.d/zzz-www.conf:/user/local/etc/php-fpm.d/zzz-www.conf
+      - ./practice-cms/docker/local.env/php-laravel/php-fpm.d/zzz-www.conf:/usr/local/etc/php-fpm.d/zzz-www.conf
     networks:
       - default
       #  nginx: 
