@@ -13,6 +13,9 @@ services:
     build:
     context: .
     dockerfile: ./practice-cms/docker/local.env/nginx/Dockerfile
+    volumes:
+      - ./practice-cms/:/work/backend
+      - ./practice-cms/docker/local.env/nginx/conf.d:/etc/nginx/conf.d
     networks: 
       - default
     ports: 
