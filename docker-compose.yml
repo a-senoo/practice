@@ -1,5 +1,5 @@
 services:
-  practice-web-app:
+  cms-web-app:
     build:
       context: .
       dockerfile: ./practice-cms/docker/local.env/php-laravel/Dockerfile
@@ -9,11 +9,11 @@ services:
       - ./practice-cms/docker/local.env/php-laravel/php-fpm.d/zzz-www.conf:/usr/local/etc/php-fpm.d/zzz-www.conf
     networks:
       - default
-      #  nginx: 
-  #    build:
-  #      context: .
-  #      dockerfile: ./practice-cms/docker/local.env/nginx/Dockerfile
-  #      networks: 
-  #        - default
-  #      ports: 
-  #         - 8010:80
+  cms-nginx: 
+    build:
+    context: .
+    dockerfile: ./practice-cms/docker/local.env/nginx/Dockerfile
+    networks: 
+      - default
+    ports: 
+      - 8010:80
