@@ -20,3 +20,14 @@ services:
       - default
     ports: 
       - 8010:80
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'practice'
+      MYSQL_USER: 'practice'
+      MYSQL_PASSWORD: 'pass'
+    ports:
+      - 13306:3306
+    networks:
+      - default
