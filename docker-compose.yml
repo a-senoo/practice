@@ -1,23 +1,35 @@
-version: "3.9"
 services:
-  app:
-    build: ./infra/php
+  cms-web-app:
+    build:
+      context: .
+      dockerfile: ./practice-cms/docker/local.env/php-laravel/Dockerfile
     volumes:
-      - ./src:/data
-
-  web:
-    image: nginx:1.20-alpine
+      - ./practice-cms/:/work/backend
+      - ./practice-cms/docker/local.env/php-laravel/php.ini:/usr/local/etc/php.ini 
+      - ./practice-cms/docker/local.env/php-laravel/php-fpm.d/zzz-www.conf:/usr/local/etc/php-fpm.d/zzz-www.conf
+    networks:
+      - default
+  cms-nginx: 
+    build:
+      context: .
+      dockerfile: ./practice-cms/docker/local.env/nginx/Dockerfile
+    volumes:
+      - ./practice-cms/:/work/backend
+      - ./practice-cms/docker/local.env/nginx/conf.d:/etc/nginx/conf.d
+    networks: 
+      - default
+    ports: 
+      - 8010:80
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'practice'
+      MYSQL_USER: 'practice'
+      MYSQL_PASSWORD: 'pass'
     ports:
-      - 8080:80
+      - 13306:3306
+    networks:
+      - default
     volumes:
-      - ./src:/data
-      - ./infra/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    working_dir: /data
-
-  db:
-    build: ./infra/mysql
-    volumes:
-      - db-store:/var/lib/mysql
-
-volumes:
-  db-store:
+      - ./practice-cms/docker/local.env/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
